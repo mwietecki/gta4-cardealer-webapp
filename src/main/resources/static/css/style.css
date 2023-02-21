@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: grey;
+    font-family: Arial;
+  }
+  
+  header{
+    background-color: #333333;
+    color: darkgray;
+  }
+  
+  .title{
+    margin-left: 120px;
+    font-size: 60px;
+  }
+  
+  .title2{
+    margin-left: 120px;
+    font-size: 20px;;
+  }
+
+  .order-icon {
+    font-size: 20px;
+    float: right;
+    text-decoration: none;
+  }
+  
+  .navbar ul {
+    list-style: none;
+    background: #333333;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .navbar li {
+    display: inline-block;
+  }
+  
+  .navbar a {
+    text-decoration: none;
+    color: gray;
+    width: 300px;
+    display: block;
+    padding: 25px 20px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .navbar li a:hover:not(.active) {
+    background-color: orange;
+  }
+  
+  .active {
+    background-color: black;
+  }
+  
+  .main-content{
+    margin-left: 120px;
+    margin-right: 120px;
+    margin-top: 40px;
+  }
+  
+  .car {
+    margin-bottom: 40px;
+    width: auto;
+    height: 370px;
+    align-items: center;
+  }
+  
+  .car-photo {
+    float: left;
+    margin: 5px;
+    width: 600px;
+    height: 350px;
+    border: 10px solid black; 
+  }
+  
+  .carinfo {
+    text-align: justify;
+    font-size: 25px;
+    margin-left: 635px;
+    height: 370px;
+  }
+
+  .car-name {
+    color: red;
+    margin: 5px;
+  }
+
+  .description {
+    color: white;
+    margin: 5px;
+  }
+
+  .btn-order{
+    text-decoration: none;
+    padding: 10px 30px;
+    width: 70%;
+    background-color: red;
+    color: white;
+    font-weight: 500;
+  }
+
+  .btn-order:hover{
+    background-color: darkred;
+  }
+
+  table, tr {
+    width: 100%;
+    border: 1px solid black;
+  }
+
+  th, td{
+    text-align: center;
+    border: 1px solid black;
+  }
+
+  td img {
+    width: 100px;
+    height: 60px;
+  }
+
+  .mbtn {
+    background-color: blanchedalmond;
+    text-decoration: none;
+    display: block;
+    width: 30px;
+    height: 25px;
+    text-align: center;
+    border-radius: 5px;
+    padding-top: 5px;
+    font-size: larger;
+    font-weight: bold;
+  }
+
+  td p {
+    margin: 3px;
+    padding: 5px;
+  }
+
+  form label{
+    width: 100%;
+}
+
+form {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form label{
+  width: 100%;
+}

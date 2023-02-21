@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GTA4 CARS SHOP</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<header th:replace="fragments/header :: ShopHeader"></header>
+  <div class="main-content">
+
+    <div class="summary">
+        <h1>ADD NEW ANNOUNCEMENT</h1>
+
+        <form th:action="@{/admin}" method="post">
+            <label>MARK</label>
+            <input type="text" name="name" required>
+            <label>DESCRIPTION</label>
+            <input type="text" name="description" required>
+            <label>PRICE</label>
+            <input type="text" name="price" required>
+            <label>PHOTO URL</label>
+            <input type="text" name="imgUrl" required>
+            <button>ADD</button>
+        </form>
+
+    </div>
+  </div>
+  </body>
+</html>
