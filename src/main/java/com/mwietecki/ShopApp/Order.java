@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -19,45 +20,41 @@ public class Order {
     private BigDecimal sum = BigDecimal.ZERO;
 
     public void addCar(Car car) {
-        boolean notFound = true;
-
-        for (OrderCar oc : orderCars){
-            if (oc.getCar().getId().equals(car.getId())){
-                notFound = false;
-                oc.increaseCounter();
-                recalculatePriceAndCounter();
-                break;
-            }
-        }
-
-        if (notFound) {
-            orderCars.add(new OrderCar(car));
-            recalculatePriceAndCounter();
-        }
+        getOrderCarByCar(car).ifPresentOrElse(
+                OrderCar::increaseCounter,
+                () -> orderCars.add(new OrderCar(car))
+        );
+        recalculatePriceAndCounter();
     }
 
     public void removeCar(Car car) {
-        for (OrderCar oc : orderCars){
-            if (oc.getCar().getId().equals(car.getId())){
-                oc.decreaseCounter();
-                if (oc.hasZeroCars()) {
-                    orderCars.remove(oc);
-                }
-                recalculatePriceAndCounter();
-                break;
+        Optional<OrderCar> oOrderCar = getOrderCarByCar(car);
+        if (oOrderCar.isPresent()){
+            OrderCar orderCar = oOrderCar.get();
+            orderCar.decreaseCounter();
+            if (orderCar.hasZeroCars()) {
+                removeAllCars(car);
             }
         }
+        recalculatePriceAndCounter();
+    }
+
+    public void removeAllCars(Car car) {
+        orderCars.removeIf(i -> i.equals(car));
     }
 
     private void recalculatePriceAndCounter() {
-        int tempCounter = 0;
-        BigDecimal tempPrice = BigDecimal.ZERO;
+        sum = orderCars.stream().map(OrderCar::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        counter = orderCars.stream().mapToInt(OrderCar::getCounter)
+                .reduce(0, Integer::sum);
+    }
 
-        for (OrderCar oc : orderCars) {
-            tempCounter += oc.getCounter();
-            tempPrice = tempPrice.add(oc.getPrice());
-        }
-        this.counter = tempCounter;
-        this.sum = tempPrice;
+
+
+    private Optional<OrderCar> getOrderCarByCar(Car car) {
+        return orderCars.stream()
+                .filter(i -> i.getCar().getId().equals(car.getId()))
+                .findFirst();
     }
 }

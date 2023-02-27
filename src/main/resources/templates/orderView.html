@@ -30,16 +30,15 @@
                 <th>Price</th>
                 <th style="width: 30px;"></th>
             </tr>
-            <tr>
+            <tr th:each="orderCar : ${@order.orderCars}">
                 <td>
-                    <img src="http://www.gta-universum.de/bilder/gta4/fahrzeuge/sportwagen/gross/banshee_01.png">
+                    <img th:src="@{${orderCar.car.imgUrl}}">
                 </td>
-                <td>Banshee</td>
-                <td> Adjustable seats, Air conditioning, Alloy wheels, CD Player, Central Locking, Electric mirrors, Electric windows, Full service history, Leather uphostery, Immobilizer
-                </td>
-                <td>110000$</td>
+                <td th:text="${orderCar.car.name}"></td>
+                <td th:text="${orderCar.car.description}"></td>
+                <td th:text="${orderCar.price}"></td>
                 <td>
-                <a href="" class="mbtn">X</a>
+                <a class="mbtn" th:href="@{'/order/remove/' + ${orderCar.car.id}}">X</a>
                 </td>
             </tr>
         </table>
@@ -59,7 +58,7 @@
             </form>
         </div>
         <div class="summary">
-            <p><span>To pay </span>110000<span> USD</span></p>
+            <p><span>To pay </span><span th:text="${@order.sum}"></span><span> USD</span></p>
         </div>
         <a href="" class="btn-order">ZAMÓW</a>
     </div>

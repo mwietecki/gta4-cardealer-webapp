@@ -16,7 +16,7 @@
       <li><a class="active" href="viewcars">VIEW CARS</a></li>
       <li><a href="about">ABOUT</a></li>
       <li><a href="contactus">CONTACT US</a></li>
-      <li><a href="orderView">YOUR ORDER<span> (<span th:text="${@order.counter}"></span>)</span></a></li>
+      <li><a th:href="@{/order/orderview}">YOUR ORDER<span> (<span th:text="${@order.counter}"></span>)</span></a></li>
     </ul>
   </div>
   </header>
@@ -27,7 +27,7 @@
       <div class="description">
         <h1 class="car-name" th:text="${car.name}"></h1>
         <p class="descriptions" th:text="${car.description}"></p>
-        <a th:href="@{'/add/' + ${car.id}}" class="btn-order" ( th:text="${car.price}" )></a>
+        <a th:href="@{'/viewcars/add/' + ${car.id}}" class="btn-order" ( th:text="${car.price}" )></a>
     </div>
 
     </div>
