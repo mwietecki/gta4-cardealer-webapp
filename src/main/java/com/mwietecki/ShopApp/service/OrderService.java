@@ -1,42 +1,37 @@
 package com.mwietecki.ShopApp.service;
 
-import com.mwietecki.ShopApp.Order;
-import com.mwietecki.ShopApp.model.Car;
-import com.mwietecki.ShopApp.repository.CarRepository;
+
+import com.mwietecki.ShopApp.Cart;
+import com.mwietecki.ShopApp.dto.OrderDto;
+import com.mwietecki.ShopApp.mapper.OrderMapper;
+import com.mwietecki.ShopApp.model.order.Order;
+import com.mwietecki.ShopApp.model.order.OrderCar;
+import com.mwietecki.ShopApp.repository.OrderCarRepository;
+import com.mwietecki.ShopApp.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderService {
 
-    private final Order order;
-    private final CarRepository carRepository;
+    private final Cart cart;
+    private final OrderRepository orderRepository;
+    private final OrderCarRepository orderCarRepository;
+
     @Autowired
-    public OrderService(Order order, CarRepository carRepository) {
-        this.order = order;
-        this.carRepository = carRepository;
+    public OrderService(Cart cart, OrderRepository orderRepository, OrderCarRepository orderCarRepository) {
+        this.cart = cart;
+        this.orderRepository = orderRepository;
+        this.orderCarRepository = orderCarRepository;
     }
 
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
-    }
-
-    public void addCarToOrder(Long carId) {
-        Optional<Car> oCar = carRepository.findById(carId);
-        if (oCar.isPresent()){
-            Car car = oCar.get();
-            order.addCar(car);
-        }
-    }
-
-    public void removeCar(Long carId) {
-        Optional<Car> oCar = carRepository.findById(carId);
-        if (oCar.isPresent()) {
-            Car car = oCar.get();
-            order.removeCar(car);
-        }
+    public void saveOrder(OrderDto orderDto) {
+        Order order = OrderMapper.mapToOrder(orderDto);
+        orderRepository.save(order);
+        List<OrderCar> orderCars = OrderMapper.mapToOrderCarList(cart, order);
+        orderCarRepository.saveAll(OrderMapper.mapToOrderCarList(cart, order));
+        cart.clearCart();
     }
 }

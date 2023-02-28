@@ -6,12 +6,12 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 @Getter
-public class OrderCar {
+public class CartCar {
     private Car car;
     private int counter;
     private BigDecimal price;
 
-    public OrderCar(Car car) {
+    public CartCar(Car car) {
         this.car = car;
         this.counter = 1;
         this.price = car.getPrice();

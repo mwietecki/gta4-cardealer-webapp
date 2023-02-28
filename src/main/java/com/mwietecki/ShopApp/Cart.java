@@ -1,6 +1,9 @@
 package com.mwietecki.ShopApp;
 
+import com.mwietecki.ShopApp.dto.OrderDto;
+import com.mwietecki.ShopApp.mapper.OrderMapper;
 import com.mwietecki.ShopApp.model.Car;
+import com.mwietecki.ShopApp.model.order.Order;
 import lombok.Getter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -14,25 +17,25 @@ import java.util.Optional;
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Getter
-public class Order {
-    private List<OrderCar> orderCars = new ArrayList<>();
+public class Cart {
+    private List<CartCar> cartCars = new ArrayList<>();
     private int counter = 0;
     private BigDecimal sum = BigDecimal.ZERO;
 
     public void addCar(Car car) {
         getOrderCarByCar(car).ifPresentOrElse(
-                OrderCar::increaseCounter,
-                () -> orderCars.add(new OrderCar(car))
+                CartCar::increaseCounter,
+                () -> cartCars.add(new CartCar(car))
         );
         recalculatePriceAndCounter();
     }
 
     public void removeCar(Car car) {
-        Optional<OrderCar> oOrderCar = getOrderCarByCar(car);
+        Optional<CartCar> oOrderCar = getOrderCarByCar(car);
         if (oOrderCar.isPresent()){
-            OrderCar orderCar = oOrderCar.get();
-            orderCar.decreaseCounter();
-            if (orderCar.hasZeroCars()) {
+            CartCar cartCar = oOrderCar.get();
+            cartCar.decreaseCounter();
+            if (cartCar.hasZeroCars()) {
                 removeAllCars(car);
             }
         }
@@ -40,21 +43,27 @@ public class Order {
     }
 
     public void removeAllCars(Car car) {
-        orderCars.removeIf(i -> i.equals(car));
+        cartCars.removeIf(i -> i.equals(car));
     }
 
     private void recalculatePriceAndCounter() {
-        sum = orderCars.stream().map(OrderCar::getPrice)
+        sum = cartCars.stream().map(CartCar::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        counter = orderCars.stream().mapToInt(OrderCar::getCounter)
+        counter = cartCars.stream().mapToInt(CartCar::getCounter)
                 .reduce(0, Integer::sum);
     }
 
 
 
-    private Optional<OrderCar> getOrderCarByCar(Car car) {
-        return orderCars.stream()
+    private Optional<CartCar> getOrderCarByCar(Car car) {
+        return cartCars.stream()
                 .filter(i -> i.getCar().getId().equals(car.getId()))
                 .findFirst();
+    }
+
+    public void clearCart() {
+        cartCars.clear();
+        counter = 0;
+        sum = BigDecimal.ZERO;
     }
 }

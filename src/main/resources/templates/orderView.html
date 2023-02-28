@@ -30,15 +30,15 @@
                 <th>Price</th>
                 <th style="width: 30px;"></th>
             </tr>
-            <tr th:each="orderCar : ${@order.orderCars}">
+            <tr th:each="cartCar : ${@cart.getCartCars}">
                 <td>
-                    <img th:src="@{${orderCar.car.imgUrl}}">
+                    <img th:src="@{${cartCar.car.imgUrl}}">
                 </td>
-                <td th:text="${orderCar.car.name}"></td>
-                <td th:text="${orderCar.car.description}"></td>
-                <td th:text="${orderCar.price}"></td>
+                <td th:text="${cartCar.car.name}"></td>
+                <td th:text="${cartCar.car.description}"></td>
+                <td th:text="${cartCar.price}"></td>
                 <td>
-                <a class="mbtn" th:href="@{'/order/remove/' + ${orderCar.car.id}}">X</a>
+                <a class="mbtn" th:href="@{'/order/remove/' + ${cartCar.car.id}}">X</a>
                 </td>
             </tr>
         </table>
@@ -58,10 +58,7 @@
             </form>
         </div>
         <div class="summary">
-            <p><span>To pay </span><span th:text="${@order.sum}"></span><span> USD</span></p>
-        </div>
-        <a href="" class="btn-order">ZAMÓW</a>
-    </div>
+            <p><span>To pay </span><span th:text="${@cart.sum}"></span><span> USD</span></p>
 </div>
 
   </body>
