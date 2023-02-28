@@ -10,6 +10,3 @@ HTML, CSS
 Thymeleaf
 <br>
 H2 database
-
-The guide that helped me:
-https://www.youtube.com/watch?v=XAIUMhDEt20
