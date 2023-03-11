@@ -10,3 +10,8 @@ HTML, CSS
 Thymeleaf
 <br>
 H2 database
+<br>
+
+Tutorial that helped me a lot:
+<br>
+https://www.youtube.com/watch?v=XAIUMhDEt20&t=2707s
